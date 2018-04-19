@@ -24,6 +24,11 @@ url地址为:http:www.xxx.com/api/download
 注意参数的拼接,URL后面跟?,参数之间跟&,记得跨域
 
 2.参数非常多,采用post
+后端正常水平:
+
+post把参数传给后端接口后,让后端返回文件的下载地址,再按照方法1中用window.location.href打开这个地址即可.
+
+后端萌新:
 
 多讲一点,文件属于流文件不是json,所以要改响应类型responseType为arraybuffer而不是改header.拿到二进制文件还需要按照服务器响应头的数据类型转换.
 
@@ -35,6 +40,11 @@ url地址为:http:www.xxx.com/api/download
 
 ![basic](https://github.com/bill-mark/axios-post-file-excel/blob/master/static/5.png/)
 ![basic](https://github.com/bill-mark/axios-post-file-excel/blob/master/static/6.png/)
+
+
+这种方法会有个问题,当接口报错,是不能直接打印error的,因为已经被浏览器处理成文件流了,
+
+需要和后端在响应头约定下报错格式.比如后端在header里新增个errcode属性和error_content属性,如果errcode不等于undefined,中断执行,弹窗error-contente内容
 
 出错排查建议:
 
